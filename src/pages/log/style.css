@@ -1,0 +1,117 @@
+.container {
+  padding: 40px;
+  border-radius: 5px;
+  width: 50vw;
+  display: grid;
+  grid-template-columns: 0.5fr;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  background: orange;
+}
+.container h2 {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 28px;
+}
+
+.container input {
+  width: 35vw;
+  border-style: none;
+  padding: 16px;
+  margin: 3px;
+  border-radius: 3px;
+  color: orange;
+}
+
+.container .butoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.container button.cadastrar {
+  padding: 0px;
+  margin: 3px;
+}
+
+button {
+  font-size: 16px;
+  width: 80px;
+  border-style: none;
+  padding: 10px;
+  margin: 3px;
+  border-radius: 3px;
+  background: white;
+  color: orange;
+  cursor: pointer;
+}
+
+#modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  position: relative;
+  padding: 60px;
+  margin: 185px auto;
+  border-radius: 5px;
+  width: 60vw;
+  display: grid;
+  grid-template-columns: 0.5fr;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  background: orange;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  display: grid;
+}
+
+.modal-content button.cadastrar {
+  margin-top: 10px;
+  padding: 10px 0;
+}
+
+.close {
+  width: 30px;
+  padding: 5px;
+  position: absolute;
+  top: -50px;
+  left: -60px;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
