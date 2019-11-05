@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 
-export default function Log() {
+import api from "../../services/api";
+
+export default function Log(props) {
+  const [name, setname] = useState("");
+  const [password, setpassword] = useState("");
+
   function openModal() {
     var modal = document.getElementById("modal");
     modal.style.display = "block";
@@ -12,16 +17,49 @@ export default function Log() {
     modal.style.display = "none";
   }
 
+  function handleClick() {
+    if (name === "" || password === "") {
+      return alert("Login inválido");
+    }
+
+    api
+      .post("/users/authenticate", { name, password })
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        props.history.push("/dashboard");
+
+        return;
+      })
+      .catch(err => {
+        alert("Login inválido");
+        console.log(err);
+      });
+  }
+
   return (
     <div className="container">
       <h2>Entrar</h2>
-      <input type="text" placeholder="Usuário" />
-      <input type="password" placeholder="Senha" />
+      <input
+        name="name"
+        value={name}
+        onChange={e => setname(e.target.value)}
+        id="user"
+        type="text"
+        placeholder="Usuário"
+      />
+      <input
+        name="password"
+        value={password}
+        onChange={e => setpassword(e.target.value)}
+        id="pass"
+        type="password"
+        placeholder="password"
+      />
       <div className="butoes">
         <button className="cadastrar" onClick={openModal}>
           Cadastrar
         </button>
-        <button>Entrar</button>
+        <button onClick={handleClick}>Entrar</button>
       </div>
 
       <div id="modal">

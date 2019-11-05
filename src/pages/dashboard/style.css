@@ -1,0 +1,32 @@
+.dashboard {
+  padding: 40px;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard div {
+  padding: 40px 0;
+  border-style: none;
+  border-radius: 5px;
+  background-color: orange;
+  color: white;
+  width: 40vw;
+  cursor: pointer;
+  margin: 10px;
+  text-align: center;
+}
+
+.sair {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  background-color: #ddd8d8;
+  border: 1px solid orange;
+}
+
+.sair:hover {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}

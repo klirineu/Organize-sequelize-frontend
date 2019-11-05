@@ -1,0 +1,60 @@
+.M-dividas {
+  width: 80vw;
+}
+
+.nova-divida {
+  display: grid;
+  padding: 20px;
+  margin: 20px;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.nova-divida h3 {
+  margin-top: 4px;
+  color: orange;
+  font-size: 24px;
+}
+
+.nova-divida input {
+  background-color: #ddd8d8;
+  margin: 3px;
+  color: orange;
+  text-align: center;
+  border: 1px solid orange;
+  border-radius: 5px;
+  width: 50vw;
+}
+
+.nova-divida input:focus {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nova-divida button {
+  border: 1px solid orange;
+
+  background-color: #ddd8d8;
+}
+.nova-divida button:hover {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.list-dividas {
+  border-style: none;
+  border-radius: 5px;
+  list-style: none;
+  padding: 8px 0;
+}
+
+.list-dividas li {
+  color: orange;
+  font-size: 24px;
+  text-align: center;
+  border: 1px solid orange;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
