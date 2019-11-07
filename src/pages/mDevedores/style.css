@@ -1,0 +1,84 @@
+.M-devedores {
+  width: 80vw;
+}
+
+.M-devedores .voltar {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  background-color: #ddd8d8;
+  border: 1px solid orange;
+}
+
+.M-devedores .voltar:hover {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.novo-devedor {
+  display: grid;
+  padding: 20px;
+  margin: 20px;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.novo-devedor h3 {
+  margin-top: 4px;
+  color: orange;
+  font-size: 24px;
+}
+
+.novo-devedor input {
+  background-color: #ddd8d8;
+  margin: 3px;
+  color: orange;
+  text-align: center;
+  border: 1px solid orange;
+  border-radius: 5px;
+  width: 50vw;
+}
+
+.novo-devedor input:focus {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.novo-devedor button {
+  border: 1px solid orange;
+
+  background-color: #ddd8d8;
+}
+.novo-devedor button:hover {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.list-devedores {
+  border-style: none;
+  border-radius: 5px;
+  list-style: none;
+  padding: 8px 0;
+}
+
+.list-devedores li {
+  color: orange;
+  font-size: 24px;
+  text-align: center;
+  border: 1px solid orange;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.list-devedores li .listar {
+  border: 1px solid orange;
+  background-color: #ddd8d8;
+  width: 50px;
+  padding: 5px;
+  margin-left: 20px;
+}
+
+.list-devedores li .listar:hover {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}

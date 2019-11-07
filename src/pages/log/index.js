@@ -17,7 +17,8 @@ export default function Log(props) {
     modal.style.display = "none";
   }
 
-  function handleClick() {
+  function handleClick(e) {
+    e.preventDefault();
     if (name === "" || password === "") {
       return alert("Login inválido");
     }
@@ -27,12 +28,10 @@ export default function Log(props) {
       .then(res => {
         localStorage.setItem("token", res.data.token);
         props.history.push("/dashboard");
-
         return;
       })
       .catch(err => {
         alert("Login inválido");
-        console.log(err);
       });
   }
 
@@ -53,13 +52,13 @@ export default function Log(props) {
         onChange={e => setpassword(e.target.value)}
         id="pass"
         type="password"
-        placeholder="password"
+        placeholder="Senha"
       />
       <div className="butoes">
         <button className="cadastrar" onClick={openModal}>
           Cadastrar
         </button>
-        <button onClick={handleClick}>Entrar</button>
+        <button onClick={e => handleClick(e)}>Entrar</button>
       </div>
 
       <div id="modal">

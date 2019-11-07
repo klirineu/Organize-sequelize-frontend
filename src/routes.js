@@ -7,6 +7,7 @@ import Log from "./pages/log/index";
 import Dashboard from "./pages/dashboard/index";
 import MinhasDividas from "./pages/mDividas/index";
 import MeusDevedores from "./pages/mDevedores/index";
+import DevedorDividas from "./pages/DevedorDividas";
 
 export default function Routes() {
   return (
@@ -15,6 +16,7 @@ export default function Routes() {
       <PrivateRoute path="/dashboard" component={Dashboard} />
       <PrivateRoute path="/minhas-dividas" component={MinhasDividas} />
       <PrivateRoute path="/meus-devedores" component={MeusDevedores} />
+      <PrivateRoute path="/devedor-dividas" component={DevedorDividas} />
     </Switch>
   );
 }

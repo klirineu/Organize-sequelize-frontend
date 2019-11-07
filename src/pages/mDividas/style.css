@@ -41,6 +41,18 @@
   box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
 }
 
+.M-dividas .voltar {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  background-color: #ddd8d8;
+  border: 1px solid orange;
+}
+
+.M-dividas .voltar:hover {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
 .list-dividas {
   border-style: none;
   border-radius: 5px;
@@ -56,5 +68,17 @@
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.list-dividas li .excluir {
+  border: 1px solid orange;
+  background-color: #ddd8d8;
+  width: 30px;
+  padding: 5px;
+  margin-left: 50px;
+}
+
+.list-dividas li .excluir:hover {
   box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
 }
