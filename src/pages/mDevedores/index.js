@@ -7,13 +7,14 @@ import api from "../../services/api";
 export default function MeusDevedores() {
   const [devedores, setDevedores] = useState([]);
   const [name, setName] = useState("");
+  const [newName, setnewName] = useState("");
 
   const token = localStorage.getItem("token");
   const Auth = `Bearer ${token}`;
 
   useEffect(() => {
-    async function handleDevedores() {
-      await api
+    function handleDevedores() {
+      api
         .get(`/users/devedores`, { headers: { Authorization: Auth } })
         .then(res => {
           setDevedores(res.data.devedores);
@@ -23,7 +24,7 @@ export default function MeusDevedores() {
         });
     }
     handleDevedores();
-  }, [Auth, devedores]);
+  }, [Auth]);
 
   async function handleClick() {
     await api.post(
@@ -33,8 +34,36 @@ export default function MeusDevedores() {
     );
   }
 
+  async function editarDev(id) {
+    const name = newName;
+
+    if (name === "") {
+      alert("Preencha os campos");
+    }
+
+    await api.put(
+      `/users/devedores/${id}`,
+      { name },
+      { headers: { Authorization: Auth } }
+    );
+  }
+
+  async function deleteDev(id) {
+    await api.delete(`/users/devedores/${id}`, {
+      headers: { Authorization: Auth }
+    });
+  }
+
   function listDividas(id) {
     localStorage.setItem("dev", id);
+  }
+
+  function openModal(id) {
+    document.getElementById(id).style.display = "block";
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
   }
   return (
     <div className="M-devedores">
@@ -64,6 +93,42 @@ export default function MeusDevedores() {
                 Listar
               </button>
             </Link>
+
+            <button className="editar" onClick={() => openModal(devedor.id)}>
+              Editar
+            </button>
+
+            <div id={devedor.id} key={devedor.id} className="modal3">
+              <div className="modal-content3">
+                <button
+                  className="close3"
+                  onClick={() => closeModal(devedor.id)}
+                >
+                  X
+                </button>
+
+                <h2>Editar/excluir</h2>
+                <input
+                  type="text"
+                  name="setName"
+                  onChange={e => setnewName(e.target.value)}
+                  placeholder="Nome"
+                />
+
+                <button
+                  className="excluir"
+                  onClick={() => deleteDev(devedor.id)}
+                >
+                  Excluir
+                </button>
+                <button
+                  className="cadastrar3"
+                  onClick={() => editarDev(devedor.id)}
+                >
+                  Enviar
+                </button>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

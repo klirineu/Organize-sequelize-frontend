@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./style.css";
 
@@ -8,25 +9,21 @@ export default function Dashboard(props) {
     props.history.push("/");
   }
 
-  function minhasDividas() {
-    props.history.push("/minhas-dividas");
-  }
-
-  function meusDevedores() {
-    props.history.push("/meus-devedores");
-  }
-
   return (
     <div className="dashboard">
       <button className="sair" onClick={sair}>
         Sair
       </button>
-      <div onClick={minhasDividas}>
-        <h2>Minhas dívidas</h2>
-      </div>
-      <div onClick={meusDevedores}>
-        <h2>Meus devedores</h2>
-      </div>
+      <Link to="/minhas-dividas">
+        <button className="card">
+          <h2>Minhas dívidas</h2>
+        </button>
+      </Link>
+      <Link to="/meus-devedores">
+        <button className="card">
+          <h2>Meus devedores</h2>
+        </button>
+      </Link>
     </div>
   );
 }
