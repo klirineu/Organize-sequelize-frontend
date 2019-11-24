@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 import { Link } from "react-router-dom";
 
 import api from "../../services/api";
@@ -7,6 +8,7 @@ import "./style.css";
 
 export default function DevedorDividas() {
   const [dividas, setDividas] = useState([]);
+
   const [Vdiv, setVdiv] = useState([]);
   const [parc, setParc] = useState([]);
   const [newVdiv, setnewVdiv] = useState([]);
@@ -18,8 +20,8 @@ export default function DevedorDividas() {
   const dev = localStorage.getItem("dev");
 
   useEffect(() => {
-    function listDividas() {
-      api
+    async function listDividas() {
+      await api
         .get(`/devedores/${dev}/devedor_dividas`, {
           headers: { Authorization: Auth }
         })
@@ -31,12 +33,29 @@ export default function DevedorDividas() {
     listDividas();
   }, [Auth, dev]);
 
-  async function handleClick() {
+  function registerSocket() {
+    const socket = io("http://localhost:3333");
+
+    socket.on("DevedorDividas", newDivida => {
+      setDividas([...dividas, newDivida]);
+    });
+
+    socket.on("counterDevedorParcelas", counterDevedor => {
+      setDividas(
+        dividas.map(divida =>
+          divida.id === counterDevedor.id ? counterDevedor : divida
+        )
+      );
+    });
+  }
+
+  registerSocket();
+  function handleClick() {
     if (Vdiv === 0 || parc === 0) {
       return alert("Preencha os campos");
     }
 
-    await api
+    api
       .post(
         `/devedores/${dev}/devedor_dividas`,
         { Vdiv, parc },
@@ -47,7 +66,7 @@ export default function DevedorDividas() {
       });
   }
 
-  async function editarDiv(id) {
+  function editarDiv(id) {
     const Vdiv = newVdiv;
     const parc = newParc;
 
@@ -55,17 +74,25 @@ export default function DevedorDividas() {
       alert("Preencha os campos");
     }
 
-    await api.put(
+    api.put(
       `/devedores/${dev}/devedor_dividas/${id}`,
       { Vdiv, parc },
       { headers: { Authorization: Auth } }
     );
   }
 
-  async function deleteDiv(id) {
-    await api.delete(`/devedores/${dev}/devedor_dividas/${id}`, {
+  function deleteDiv(id) {
+    api.delete(`/devedores/${dev}/devedor_dividas/${id}`, {
       headers: { Authorization: Auth }
     });
+  }
+
+  function handleCounter(id) {
+    api.post(
+      `/devedores/${dev}/counter/${id}`,
+      {},
+      { headers: { Authorization: Auth } }
+    );
   }
 
   function openModal(id) {
@@ -106,7 +133,16 @@ export default function DevedorDividas() {
         {dividas.map(divida => (
           <li key={divida.id}>
             <strong>Valor: {divida.Vdiv}</strong>{" "}
-            <strong>Parcelas: {divida.parc}</strong>
+            <strong>
+              Parcelas: {divida.parc}/{divida.counter}
+            </strong>
+            <button
+              className="editar"
+              type="button"
+              onClick={() => handleCounter(divida.id)}
+            >
+              Pagar
+            </button>
             <button className="editar" onClick={() => openModal(divida.id)}>
               Editar
             </button>

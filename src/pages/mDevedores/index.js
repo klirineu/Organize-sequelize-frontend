@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import io from "socket.io-client";
 
 import "./style.css";
 import api from "../../services/api";
@@ -13,8 +14,8 @@ export default function MeusDevedores() {
   const Auth = `Bearer ${token}`;
 
   useEffect(() => {
-    function handleDevedores() {
-      api
+    async function handleDevedores() {
+      await api
         .get(`/users/devedores`, { headers: { Authorization: Auth } })
         .then(res => {
           setDevedores(res.data.devedores);
@@ -26,30 +27,40 @@ export default function MeusDevedores() {
     handleDevedores();
   }, [Auth]);
 
-  async function handleClick() {
-    await api.post(
+  function registerSocket() {
+    const socket = io("http://localhost:3333");
+
+    socket.on("Devedor", newDevedor => {
+      setDevedores([...devedores, newDevedor]);
+    });
+  }
+
+  registerSocket();
+
+  function handleClick() {
+    api.post(
       `/users/devedores`,
       { name },
       { headers: { Authorization: Auth } }
     );
   }
 
-  async function editarDev(id) {
+  function editarDev(id) {
     const name = newName;
 
     if (name === "") {
       alert("Preencha os campos");
     }
 
-    await api.put(
+    api.put(
       `/users/devedores/${id}`,
       { name },
       { headers: { Authorization: Auth } }
     );
   }
 
-  async function deleteDev(id) {
-    await api.delete(`/users/devedores/${id}`, {
+  function deleteDev(id) {
+    api.delete(`/users/devedores/${id}`, {
       headers: { Authorization: Auth }
     });
   }

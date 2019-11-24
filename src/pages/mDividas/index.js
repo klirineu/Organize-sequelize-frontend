@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import io from "socket.io-client";
 
 import api from "../../services/api";
 
@@ -16,8 +17,8 @@ export default function MinhasDividas(props) {
   const Auth = `Bearer ${token}`;
 
   useEffect(() => {
-    function handlDividas() {
-      api
+    async function handlDividas() {
+      await api
         .get(`/users/user_dividas`, { headers: { Authorization: Auth } })
         .then(res => {
           setmDividas(res.data.user_dividas);
@@ -29,12 +30,30 @@ export default function MinhasDividas(props) {
     handlDividas();
   }, [Auth]);
 
-  async function handleClick() {
+  function registerSocket() {
+    const socket = io("http://localhost:3333");
+
+    socket.on("UserDividas", newDivida => {
+      setmDividas([...mDividas, newDivida]);
+    });
+
+    socket.on("counterUserParcelas", counterDevedor => {
+      setmDividas(
+        mDividas.map(divida =>
+          divida.id === counterDevedor.id ? counterDevedor : divida
+        )
+      );
+    });
+  }
+
+  registerSocket();
+
+  function handleClick() {
     if (Vdiv === 0 || parc === 0) {
       return alert("Preencha os campos");
     }
 
-    await api
+    api
       .post(
         `/users/user_dividas`,
         { Vdiv, parc },
@@ -45,7 +64,7 @@ export default function MinhasDividas(props) {
       });
   }
 
-  async function editarDiv(id) {
+  function editarDiv(id) {
     const Vdiv = newVdiv;
     const parc = newParc;
 
@@ -53,18 +72,26 @@ export default function MinhasDividas(props) {
       alert("Preencha os campos");
     }
 
-    await api.put(
+    api.put(
       `/users/user_dividas/${id}`,
       { Vdiv, parc },
       { headers: { Authorization: Auth } }
     );
   }
 
-  async function deleteDiv(id) {
-    await api.delete(`/users/user_dividas/${id}`, {
+  function deleteDiv(id) {
+    api.delete(`/users/user_dividas/${id}`, {
       headers: { Authorization: Auth }
     });
     props.history.push("minhas-dividas");
+  }
+
+  function handleCounter(id) {
+    api.post(
+      `/users/user_dividas/counter/${id}`,
+      {},
+      { headers: { Authorization: Auth } }
+    );
   }
 
   function openModal(id) {
@@ -100,7 +127,12 @@ export default function MinhasDividas(props) {
         {mDividas.map(divida => (
           <li key={divida.id}>
             <strong>Valor: {divida.Vdiv}</strong>{" "}
-            <strong>Parcelas: {divida.parc}</strong>
+            <strong>
+              Parcelas: {divida.parc}/{divida.counter}
+            </strong>
+            <button className="editar" onClick={() => handleCounter(divida.id)}>
+              Pagar
+            </button>
             <button className="editar" onClick={() => openModal(divida.id)}>
               Editar
             </button>
